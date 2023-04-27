@@ -31,6 +31,7 @@ export const Metrics = {
   Radius_3: "12px",
   Radius_4: "16px",
   Radius_5: "100%",
+  Radius_6: "24px 24px 100px 24px",
 };
 
 export default Metrics;
