@@ -1,9 +1,11 @@
 "use client";
 import styled from "styled-components";
+import { useForm } from "react-hook-form";
 // import styles from "./page.module.css";
 
 import { Fonts, Colors, Metrics } from "@/themes";
 
+import Input from "./Input";
 import IconSvg from "public/images/icon-arrow.svg";
 
 const Main = styled.div`
@@ -75,22 +77,48 @@ const Divider = styled.div`
 `;
 
 export default function Home() {
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm();
+  const onSubmit = (data: any) => console.log(data);
+
+  const inputList = [
+    {
+      name: "day",
+      label: "day",
+      rule: { required: true },
+      errorMessage: "Must be a valid day",
+    },
+    {
+      name: "month",
+      label: "month",
+      rule: { required: true },
+      errorMessage: "Must be a valid month",
+    },
+    {
+      name: "year",
+      label: "year",
+      rule: { required: true },
+      errorMessage: "Must be in the past",
+    },
+  ];
+
   return (
     <Main>
       <Wrapper>
         <InputWrapper>
-          <div>
-            <label htmlFor=""></label>
-            <input type="text" />
-          </div>
-          <div>
-            <label htmlFor=""></label>
-            <input type="text" />
-          </div>
-          <div>
-            <label htmlFor=""></label>
-            <input type="text" />
-          </div>
+          {inputList.map((config, index) => (
+            <Input
+              key={index}
+              {...{
+                register,
+                ...config,
+              }}
+            />
+          ))}
         </InputWrapper>
 
         <Divider>

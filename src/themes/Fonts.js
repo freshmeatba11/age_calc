@@ -6,179 +6,55 @@ const type = {
 };
 
 const Fonts = {
+  type,
   H1: () => styled.h1`
-    font-family: ${type.base};
+    font-family: ${`"Poppins-BoldItalic"` + "," + type.base};
     margin: 0;
-    font-size: 40px;
-    font-weight: 600;
-    line-height: 56px;
-    @media (max-width: ${Metrics.Mobile}) {
-      font-size: 32px;
-      letter-spacing: 0;
-      line-height: 45px;
+    font-size: 104px;
+    font-weight: 800;
+    line-height: 114.4px;
+    letter-spacing: -2%;
+    font-style: italic;
+    @media (max-width: ${Metrics.Tablet}) {
+      font-size: 56px;
+      line-height: 61.6px;
     }
-  `,
-  H2: () => styled.h2`
-    font-family: ${type.base};
-    margin: 0;
-    font-size: 32px;
-    font-weight: 600;
-    line-height: 45px;
-    @media (max-width: ${Metrics.Mobile}) {
-      font-size: 24px;
-      letter-spacing: 0;
-      line-height: 34px;
-    }
-  `,
-  H3: () => styled.h3`
-    font-family: ${type.base};
-    font-size: 24px;
-    font-weight: 600;
-    line-height: 34px;
-    margin: 0;
-    @media (max-width: ${Metrics.Mobile}) {
-      font-size: 20px;
-      letter-spacing: 0;
-      line-height: 28px;
-    }
-  `,
-  H4: () => styled.h4`
-    font-family: ${type.base};
-    margin: 0;
-    font-size: 20px;
-    font-weight: 600;
-    line-height: 28px;
-    @media (max-width: ${Metrics.Mobile}) {
-      font-size: 16px;
-      letter-spacing: 0;
-      line-height: 22px;
-    }
-  `,
-  H5: () => styled.h5`
-    font-family: ${type.base};
-    margin: 0;
-    font-size: 18px;
-    font-weight: 600;
-    line-height: 25px;
-    @media (max-width: ${Metrics.Mobile}) {
-      font-size: 14px;
-      letter-spacing: 0;
-      line-height: 20px;
-    }
-  `,
-  H6: () => styled.h6`
-    font-family: ${type.base};
-    margin: 0;
-    font-size: 16px;
-    font-weight: 600;
-    line-height: 22px;
-    @media (max-width: ${Metrics.Mobile}) {
-      font-size: 14px;
-      letter-spacing: 0;
-      line-height: 20px;
-    }
-  `,
-  H7: () => styled.h6`
-    font-family: ${type.base};
-    margin: 0;
-    font-size: 14px;
-    font-weight: 600;
-    line-height: 20px;
-  `,
-  H8: () => styled.h6`
-    font-family: ${type.base};
-    margin: 0;
-    font-size: 13px;
-    font-weight: 600;
-    line-height: 18px;
   `,
   P1: () => styled.p`
-    font-family: ${type.base};
+    font-family: ${`"Poppins-Bold"` + "," + type.base};
     margin: 0;
-    font-size: 20px;
-    font-weight: 400;
-    line-height: 28px;
-    @media (max-width: ${Metrics.Mobile}) {
-      font-size: 16px;
-      letter-spacing: 0;
-      line-height: 22px;
+    font-size: 32px;
+    font-weight: 700;
+    line-height: 48px;
+    letter-spacing: 1%;
+    @media (max-width: ${Metrics.Tablet}) {
+      font-size: 20px;
+      line-height: 30px;
+      letter-spacing: 1%;
     }
   `,
   P2: () => styled.p`
-    font-family: ${type.base};
-    margin: 0;
-    font-size: 16px;
-    font-weight: 400;
-    line-height: 22px;
-    @media (max-width: ${Metrics.Mobile}) {
-      font-size: 14px;
-      letter-spacing: 0;
-      line-height: 20px;
-    }
-  `,
-  P3: () => styled.p`
-    font-family: ${type.base};
+    font-family: ${`"Poppins-Bold"` + "," + type.base};
     margin: 0;
     font-size: 14px;
-    font-weight: 400;
-    line-height: 20px;
-    @media (max-width: ${Metrics.Mobile}) {
-      font-size: 13px;
-      letter-spacing: 0;
+    font-weight: 700;
+    line-height: 21px;
+    letter-spacing: 25%;
+    @media (max-width: ${Metrics.Tablet}) {
+      font-size: 12px;
       line-height: 18px;
     }
   `,
-  P4: () => styled.p`
-    font-family: ${type.base};
+  P3: () => styled.p`
+    font-family: ${`"Poppins-Italic"` + "," + type.base};
     margin: 0;
-    font-size: 13px;
+    font-size: 14px;
     font-weight: 400;
-    line-height: 18px;
-  `,
-  P5: () => styled.p`
-    font-family: ${type.base};
-    margin: 0;
-    font-size: 12px;
-    font-weight: 400;
-    line-height: 17px;
-  `,
-  BH1: () => styled.h1`
-    font-family: ${type.base};
-    margin: 0;
-    font-size: 20px;
-    font-weight: 600;
-    line-height: 35px;
-    @media (max-width: ${Metrics.Mobile}) {
-      font-size: 16px;
-      letter-spacing: 0.05em;
-      line-height: 28px;
+    line-height: 21px;
+    @media (max-width: ${Metrics.Tablet}) {
+      font-size: 12px;
+      line-height: 18px;
     }
-  `,
-  BH2: () => styled.h2`
-    font-family: ${type.base};
-    margin: 0;
-    font-size: 16px;
-    font-weight: 600;
-    line-height: 28px;
-  `,
-  BP1: () => styled.p`
-    font-family: ${type.base};
-    margin: 0;
-    font-size: 18px;
-    font-weight: 400;
-    line-height: 32px;
-    @media (max-width: ${Metrics.Mobile}) {
-      font-size: 16px;
-      letter-spacing: 0;
-      line-height: 28px;
-    }
-  `,
-  BP2: () => styled.p`
-    font-family: ${type.base};
-    margin: 0;
-    font-size: 16px;
-    font-weight: 400;
-    line-height: 28px;
   `,
 };
 

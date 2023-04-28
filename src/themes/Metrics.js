@@ -17,6 +17,7 @@ export const Metrics = {
   pxXL: "32px",
 
   Mobile: "375px",
+  Tablet: "768px",
   Desktop: "1440px",
 
   //Shadow
