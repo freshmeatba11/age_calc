@@ -4,9 +4,11 @@ import { useForm } from "react-hook-form";
 // import styles from "./page.module.css";
 
 import { Fonts, Colors, Metrics } from "@/themes";
+import { isValidDate } from "@/utils/date";
 
 import Input from "./Input";
 import IconSvg from "public/images/icon-arrow.svg";
+import { useEffect } from "react";
 
 const Main = styled.div`
   background-color: ${Colors.OffWhite};
@@ -82,27 +84,94 @@ export default function Home() {
     handleSubmit,
     watch,
     formState: { errors },
-  } = useForm();
+    setValue,
+    setError,
+    clearErrors,
+  } = useForm({
+    mode: "onChange",
+  });
   const onSubmit = (data: any) => console.log(data);
+
+  const now = new Date();
+
+  const inputDay = watch("input.day");
+  const inputMonth = watch("input.month");
+  const inputYear = watch("input.year");
+
+  useEffect(() => {
+    if (inputDay && inputMonth && inputYear) {
+      const date = {
+        day: inputDay,
+        month: inputMonth,
+        year: inputYear,
+      };
+      if (!isValidDate(date)) {
+        setTimeout(() => {
+          setError("input.day", {
+            type: "custom",
+            message: "Invalid Date",
+          });
+          setError("input.month", {
+            type: "custom",
+            message: "",
+          });
+          setError("input.year", {
+            type: "custom",
+            message: "",
+          });
+        }, 100);
+      } else {
+        clearErrors();
+      }
+    }
+  }, [inputDay, inputMonth, inputYear]);
 
   const inputList = [
     {
       name: "day",
       label: "day",
-      rule: { required: true },
-      errorMessage: "Must be a valid day",
+      placeHolder: "DD",
+      rule: {
+        required: "Must be a valid day",
+        maxLength: {
+          value: 2,
+          message: "Must be a valid day",
+        },
+        pattern: {
+          value: /^[0-9]*$/,
+          message: "Number only",
+        },
+        validate: {
+          value: (value: number) =>
+            (value > 0 && value < 32) || "Must be a valid day",
+        },
+      },
     },
     {
       name: "month",
       label: "month",
-      rule: { required: true },
-      errorMessage: "Must be a valid month",
+      placeHolder: "MM",
+      rule: {
+        required: true,
+        maxLength: 2,
+        validate: {
+          value: (value: number) =>
+            (value > 0 && value < 13) || "Must be a valid month",
+        },
+      },
     },
     {
       name: "year",
       label: "year",
-      rule: { required: true },
-      errorMessage: "Must be in the past",
+      placeHolder: "YYYY",
+      rule: {
+        required: true,
+        maxLength: 4,
+        validate: {
+          value: (value: number) =>
+            value <= now.getFullYear() || "Must be in the past",
+        },
+      },
     },
   ];
 
@@ -110,16 +179,29 @@ export default function Home() {
     <Main>
       <Wrapper>
         <InputWrapper>
-          {inputList.map((config, index) => (
-            <Input
-              key={index}
-              {...{
-                register,
-                ...config,
-              }}
-            />
-          ))}
+          {inputList.map(({ name, ...config }, index) => {
+            return (
+              <Input
+                key={index}
+                {...{
+                  register,
+                  // @ts-ignore
+                  isError: errors.input?.[name] ? true : false,
+                  ...config,
+                  name: `input.${name}`,
+                  errorMessage:
+                    // @ts-ignore
+                    errors.input?.[name]?.message,
+                }}
+              />
+            );
+          })}
         </InputWrapper>
+        {inputDay && inputMonth && inputYear && (
+          <div>
+            {inputDay}-{inputMonth}-{inputYear}
+          </div>
+        )}
 
         <Divider>
           <hr />
@@ -127,7 +209,6 @@ export default function Home() {
             <IconSvg />
           </SvgWrapper>
         </Divider>
-
         <div>
           <h1>-- years</h1>
           <h1>-- months</h1>

@@ -21,6 +21,9 @@ const InputWrapper = styled.div`
     border-radius: ${Metrics.Radius_2};
     caret-color: ${Colors.Purple};
     cursor: pointer;
+    &::placeholder {
+      opacity: 0.8;
+    }
     &:is(:hover, :focus, :focus-visible) {
       border-color: ${Colors.Purple};
       outline: none;
@@ -36,8 +39,8 @@ const InputWrapper = styled.div`
       font-size: 20px;
       line-height: 30px;
     }
-    .error {
-      color: ${Colors.LightRed};
+    &.error {
+      border-color: ${Colors.LightRed};
     }
   }
 `;
@@ -47,7 +50,7 @@ const LabelText = styled(Fonts.P2())`
   text-transform: uppercase;
   letter-spacing: 0.25rem;
   user-select: none;
-  .error {
+  &.error {
     color: ${Colors.LightRed};
   }
 `;
@@ -61,20 +64,36 @@ type Props = {
   register: UseFormRegister<FieldValues>;
   name: string;
   label: string;
+  placeHolder: string;
   rule: any;
+  isError: boolean;
   errorMessage: string;
+  onChange?: any;
 };
 
-const Input = ({ register, name, label, rule, errorMessage }: Props) => {
+const Input = ({
+  register,
+  name,
+  label,
+  placeHolder,
+  rule,
+  isError,
+  errorMessage,
+  onChange,
+}: Props) => {
   return (
     <Wrapper>
-      <label htmlFor={name}>
-        <LabelText>{label}</LabelText>
+      <label htmlFor={label}>
+        <LabelText className={isError ? "error" : ""}>{label}</LabelText>
       </label>
       <InputWrapper>
-        <input {...register(name, { ...rule })} />
+        <input
+          className={isError ? "error" : ""}
+          placeholder={placeHolder}
+          {...register(name, { ...rule, onChange })}
+        />
       </InputWrapper>
-      <ErrorText>{errorMessage}</ErrorText>
+      {isError && errorMessage ? <ErrorText>{errorMessage}</ErrorText> : null}
     </Wrapper>
   );
 };
