@@ -24,26 +24,26 @@ const BirthdayCalculator = ({ day, month, year }: DateType) => {
   const birthYear = birthDate.getFullYear();
 
   const result = {
-    day: 0,
-    month: 0,
-    year: 0,
+    days: 0,
+    months: 0,
+    years: 0,
   };
 
   if (currentDay < birthDay) {
-    result.day = currentDay - birthDay + 30;
+    result.days = currentDay - birthDay + 30;
     currentMonth = currentMonth - 1;
   } else {
-    result.day = currentDay - birthDay;
+    result.days = currentDay - birthDay;
   }
 
   if (currentMonth < birthMonth) {
-    result.month = currentMonth - birthMonth + 12;
+    result.months = currentMonth - birthMonth + 12;
     currentYear = currentYear - 1;
   } else {
-    result.month = currentMonth - birthMonth;
+    result.months = currentMonth - birthMonth;
   }
 
-  result.year = currentYear - birthYear;
+  result.years = currentYear - birthYear;
 
   return result;
 };

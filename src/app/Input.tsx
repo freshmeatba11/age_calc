@@ -58,10 +58,11 @@ const LabelText = styled(Fonts.P2())`
 const ErrorText = styled(Fonts.P3())`
   color: ${Colors.LightRed};
   user-select: none;
+  height: 36px;
 `;
 
 type Props = {
-  register: UseFormRegister<FieldValues>;
+  register: any;
   name: string;
   label: string;
   placeHolder: string;
@@ -93,7 +94,7 @@ const Input = ({
           {...register(name, { ...rule, onChange })}
         />
       </InputWrapper>
-      {isError && errorMessage ? <ErrorText>{errorMessage}</ErrorText> : null}
+      <ErrorText>{isError && errorMessage ? errorMessage : null}</ErrorText>
     </Wrapper>
   );
 };

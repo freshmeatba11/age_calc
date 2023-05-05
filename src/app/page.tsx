@@ -1,14 +1,14 @@
 "use client";
+import { useState, useEffect } from "react";
 import styled from "styled-components";
 import { useForm } from "react-hook-form";
 // import styles from "./page.module.css";
 
 import { Fonts, Colors, Metrics } from "@/themes";
-import { isValidDate } from "@/utils/date";
+import { isValidDate, BirthdayCalculator } from "@/utils/date";
 
 import Input from "./Input";
 import IconSvg from "public/images/icon-arrow.svg";
-import { useEffect } from "react";
 
 const Main = styled.div`
   background-color: ${Colors.OffWhite};
@@ -29,13 +29,9 @@ const Wrapper = styled.div`
   height: 486px;
   border-radius: ${Metrics.Radius_6};
   padding: 48px ${Metrics.px5};
-  display: flex;
-  flex-direction: column;
-  gap: ${Metrics.px6};
 `;
 
 const InputWrapper = styled.div`
-  border: 1px red dashed;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: ${Metrics.px4};
@@ -60,10 +56,15 @@ const SvgWrapper = styled.div`
       stroke: ${Colors.White};
     }
   }
+  cursor: pointer;
+  &:hover {
+    background-color: ${Colors.OffBlack};
+  }
 `;
 
 const Divider = styled.div`
   width: 100%;
+  padding-bottom: ${Metrics.px6};
   display: grid;
   grid-template-areas: "divider";
   align-items: center;
@@ -79,20 +80,38 @@ const Divider = styled.div`
 `;
 
 export default function Home() {
+  const [calc, setCalc] = useState({
+    isLoading: true,
+    result: { days: 0, months: 0, years: 0 },
+  });
+
   const {
     register,
     handleSubmit,
     watch,
-    formState: { errors },
+    formState: { errors, isDirty },
     setValue,
     setError,
     clearErrors,
   } = useForm({
     mode: "onChange",
+    defaultValues: {
+      input: { day: "", month: "", year: "" },
+    },
   });
-  const onSubmit = (data: any) => console.log(data);
+  const onSubmit = (data: any) => {
+    console.log(data);
+    const date = {
+      day: +data.input.day,
+      month: +data.input.month,
+      year: +data.input.year,
+    };
+    console.log(BirthdayCalculator(date));
+    setCalc({ isLoading: false, result: BirthdayCalculator(date) });
+  };
 
   const now = new Date();
+  type KeyofResultType = "days" | "months" | "years";
 
   const inputDay = watch("input.day");
   const inputMonth = watch("input.month");
@@ -101,9 +120,9 @@ export default function Home() {
   useEffect(() => {
     if (inputDay && inputMonth && inputYear) {
       const date = {
-        day: inputDay,
-        month: inputMonth,
-        year: inputYear,
+        day: +inputDay,
+        month: +inputMonth,
+        year: +inputYear,
       };
       if (!isValidDate(date)) {
         setTimeout(() => {
@@ -119,11 +138,12 @@ export default function Home() {
             type: "custom",
             message: "",
           });
-        }, 100);
+        }, 10);
       } else {
         clearErrors();
       }
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [inputDay, inputMonth, inputYear]);
 
   const inputList = [
@@ -133,10 +153,6 @@ export default function Home() {
       placeHolder: "DD",
       rule: {
         required: "Must be a valid day",
-        maxLength: {
-          value: 2,
-          message: "Must be a valid day",
-        },
         pattern: {
           value: /^[0-9]*$/,
           message: "Number only",
@@ -153,7 +169,10 @@ export default function Home() {
       placeHolder: "MM",
       rule: {
         required: true,
-        maxLength: 2,
+        pattern: {
+          value: /^[0-9]*$/,
+          message: "Number only",
+        },
         validate: {
           value: (value: number) =>
             (value > 0 && value < 13) || "Must be a valid month",
@@ -166,7 +185,10 @@ export default function Home() {
       placeHolder: "YYYY",
       rule: {
         required: true,
-        maxLength: 4,
+        pattern: {
+          value: /^[0-9]*$/,
+          message: "Number only",
+        },
         validate: {
           value: (value: number) =>
             value <= now.getFullYear() || "Must be in the past",
@@ -192,27 +214,46 @@ export default function Home() {
                   errorMessage:
                     // @ts-ignore
                     errors.input?.[name]?.message,
+                  onChange: () => {
+                    setCalc({
+                      isLoading: true,
+                      result: {
+                        days: 0,
+                        months: 0,
+                        years: 0,
+                      },
+                    });
+                  },
                 }}
               />
             );
           })}
         </InputWrapper>
-        {inputDay && inputMonth && inputYear && (
-          <div>
-            {inputDay}-{inputMonth}-{inputYear}
-          </div>
-        )}
 
         <Divider>
           <hr />
-          <SvgWrapper>
+          <SvgWrapper onClick={handleSubmit(onSubmit)}>
             <IconSvg />
           </SvgWrapper>
         </Divider>
+
         <div>
-          <h1>-- years</h1>
-          <h1>-- months</h1>
-          <h1>-- days</h1>
+          {calc.isLoading && (
+            <>
+              <h1>-- years</h1>
+              <h1>-- months</h1>
+              <h1>-- days</h1>
+            </>
+          )}
+          {isDirty &&
+            !calc.isLoading &&
+            Object.keys(calc.result).map((key) => {
+              return (
+                <h1 key={key}>
+                  {calc.result[key as KeyofResultType]} {key}
+                </h1>
+              );
+            })}
         </div>
       </Wrapper>
     </Main>
