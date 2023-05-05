@@ -19,6 +19,9 @@ const Main = styled.div`
   display: flex;
   place-items: center;
   justify-content: center;
+  & ::selection {
+    background: ${Colors.LightGrey};
+  }
 `;
 
 const Wrapper = styled.div`
@@ -57,8 +60,10 @@ const SvgWrapper = styled.div`
     }
   }
   cursor: pointer;
-  &:hover {
-    background-color: ${Colors.OffBlack};
+  @media (hover: hover) {
+    &:hover {
+      background-color: ${Colors.OffBlack};
+    }
   }
 `;
 
@@ -74,8 +79,16 @@ const Divider = styled.div`
     grid-area: divider;
   }
   hr {
+    border-color: ${Colors.LightGrey02} transparent transparent;
     width: 100%;
     height: 1px;
+  }
+`;
+
+const ResultText = styled(Fonts.H1())`
+  span {
+    color: ${Colors.Purple};
+    margin-right: ${Metrics.px2};
   }
 `;
 
@@ -224,6 +237,7 @@ export default function Home() {
                       },
                     });
                   },
+                  autoComplete: "off",
                 }}
               />
             );
@@ -240,20 +254,29 @@ export default function Home() {
         <div>
           {calc.isLoading && (
             <>
-              <h1>-- years</h1>
-              <h1>-- months</h1>
-              <h1>-- days</h1>
+              <ResultText>
+                <span>--</span>years
+              </ResultText>
+              <ResultText>
+                <span>--</span>months
+              </ResultText>
+              <ResultText>
+                <span>--</span>days
+              </ResultText>
             </>
           )}
           {isDirty &&
             !calc.isLoading &&
-            Object.keys(calc.result).map((key) => {
-              return (
-                <h1 key={key}>
-                  {calc.result[key as KeyofResultType]} {key}
-                </h1>
-              );
-            })}
+            Object.keys(calc.result)
+              .reverse()
+              .map((key) => {
+                return (
+                  <ResultText key={key}>
+                    <span>{calc.result[key as KeyofResultType]}</span>
+                    {key}
+                  </ResultText>
+                );
+              })}
         </div>
       </Wrapper>
     </Main>

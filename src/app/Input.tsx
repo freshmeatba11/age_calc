@@ -1,6 +1,5 @@
 import React from "react";
 import styled from "styled-components";
-import { UseFormRegister, FieldValues } from "react-hook-form";
 
 import { Fonts, Colors, Metrics } from "@/themes";
 
@@ -70,6 +69,7 @@ type Props = {
   isError: boolean;
   errorMessage: string;
   onChange?: any;
+  autoComplete?: string;
 };
 
 const Input = ({
@@ -81,6 +81,7 @@ const Input = ({
   isError,
   errorMessage,
   onChange,
+  autoComplete,
 }: Props) => {
   return (
     <Wrapper>
@@ -92,6 +93,7 @@ const Input = ({
           className={isError ? "error" : ""}
           placeholder={placeHolder}
           {...register(name, { ...rule, onChange })}
+          autoComplete={autoComplete}
         />
       </InputWrapper>
       <ErrorText>{isError && errorMessage ? errorMessage : null}</ErrorText>
