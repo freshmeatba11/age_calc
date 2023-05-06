@@ -238,6 +238,9 @@ export default function Home() {
                     });
                   },
                   autoComplete: "off",
+                  type: "text",
+                  pattern: "[0-9]*",
+                  inputmode: "numbermode",
                 }}
               />
             );
