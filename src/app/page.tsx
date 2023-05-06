@@ -10,7 +10,7 @@ import { isValidDate, BirthdayCalculator } from "@/utils/date";
 import Input from "./Input";
 import IconSvg from "public/images/icon-arrow.svg";
 
-const Main = styled.div`
+const Main = styled.main`
   background-color: ${Colors.OffWhite};
   width: 100%;
   height: 100%;
@@ -19,6 +19,10 @@ const Main = styled.div`
   display: flex;
   place-items: center;
   justify-content: center;
+  overflow-y: auto;
+  &::-webkit-scrollbar {
+    display: none;
+  }
   & ::selection {
     background: ${Colors.LightGrey};
   }
@@ -27,19 +31,26 @@ const Main = styled.div`
 const Wrapper = styled.div`
   background-color: ${Colors.White};
   width: 100%;
-  min-width: 343px;
+  min-width: 375px;
   max-width: 840px;
   height: 486px;
   border-radius: ${Metrics.Radius_6};
   padding: 48px ${Metrics.px5};
+
+  @media (width > ${Metrics.Tablet}) {
+    height: min-content;
+    padding: 56px;
+  }
 `;
 
 const InputWrapper = styled.div`
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  display: flex;
   gap: ${Metrics.px4};
   input {
     width: 100%;
+  }
+  @media (width > ${Metrics.Tablet}) {
+    gap: ${Metrics.px6};
   }
 `;
 
@@ -65,6 +76,14 @@ const SvgWrapper = styled.div`
       background-color: ${Colors.OffBlack};
     }
   }
+  @media (width > ${Metrics.Tablet}) {
+    width: 96px;
+    height: 96px;
+    svg {
+      width: 44px;
+      height: 44px;
+    }
+  }
 `;
 
 const Divider = styled.div`
@@ -83,12 +102,16 @@ const Divider = styled.div`
     width: 100%;
     height: 1px;
   }
+  @media (width > ${Metrics.Tablet}) {
+    justify-items: end;
+  }
 `;
 
 const ResultText = styled(Fonts.H1())`
   span {
     color: ${Colors.Purple};
     margin-right: ${Metrics.px2};
+    letter-spacing: 0.6rem;
   }
 `;
 

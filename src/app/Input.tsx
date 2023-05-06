@@ -4,10 +4,11 @@ import styled from "styled-components";
 import { Fonts, Colors, Metrics } from "@/themes";
 
 const Wrapper = styled.div`
+  max-width: 160px;
   display: flex;
   flex-direction: column;
   gap: ${Metrics.px1};
-  @media (width > ${Metrics.Mobile}) {
+  @media (width > ${Metrics.Tablet}) {
     gap: ${Metrics.px2};
   }
 `;
