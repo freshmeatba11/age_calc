@@ -70,6 +70,9 @@ type Props = {
   errorMessage: string;
   onChange?: any;
   autoComplete?: string;
+  type: string;
+  pattern: string;
+  inputmode: string;
 };
 
 const Input = ({
@@ -82,6 +85,9 @@ const Input = ({
   errorMessage,
   onChange,
   autoComplete,
+  type,
+  pattern,
+  inputmode,
 }: Props) => {
   return (
     <Wrapper>
@@ -91,9 +97,8 @@ const Input = ({
       <InputWrapper>
         <input
           className={isError ? "error" : ""}
-          placeholder={placeHolder}
           {...register(name, { ...rule, onChange })}
-          autoComplete={autoComplete}
+          {...{ placeHolder, autoComplete, type, pattern, inputmode }}
         />
       </InputWrapper>
       <ErrorText>{isError && errorMessage ? errorMessage : null}</ErrorText>
