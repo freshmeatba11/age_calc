@@ -2,7 +2,6 @@
 import { useState, useEffect } from "react";
 import styled from "styled-components";
 import { useForm } from "react-hook-form";
-// import styles from "./page.module.css";
 
 import { Fonts, Colors, Metrics } from "@/themes";
 import { isValidDate, BirthdayCalculator } from "@/utils/date";
@@ -17,8 +16,6 @@ const Main = styled.main`
   height: 100svh;
   padding: ${Metrics.px4};
   display: flex;
-  place-items: center;
-  justify-content: center;
   overflow-y: auto;
   &::-webkit-scrollbar {
     display: none;
@@ -36,6 +33,7 @@ const Wrapper = styled.div`
   height: 486px;
   border-radius: ${Metrics.Radius_6};
   padding: 48px ${Metrics.px5};
+  margin: auto;
 
   @media (width > ${Metrics.Tablet}) {
     height: min-content;
@@ -111,7 +109,9 @@ const ResultText = styled(Fonts.H1())`
   span {
     color: ${Colors.Purple};
     margin-right: ${Metrics.px2};
-    letter-spacing: 0.6rem;
+    @media (width > ${Metrics.Tablet}) {
+      letter-spacing: 0.6rem;
+    }
   }
 `;
 
@@ -263,7 +263,7 @@ export default function Home() {
                   autoComplete: "off",
                   type: "text",
                   pattern: "[0-9]*",
-                  inputmode: "numbermode",
+                  inputmode: "numeric",
                 }}
               />
             );
