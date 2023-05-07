@@ -2,7 +2,6 @@
 import { useState, useEffect } from "react";
 import styled from "styled-components";
 import { useForm } from "react-hook-form";
-// import styles from "./page.module.css";
 
 import { Fonts, Colors, Metrics } from "@/themes";
 import { isValidDate, BirthdayCalculator } from "@/utils/date";
